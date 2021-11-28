@@ -1,0 +1,674 @@
+{-# START_FILE package.yaml #-}
+name:                AdventOfCode{{year}}
+version:             0.1.0.0
+github:              "tobiasbengtsson/AdventOfCode{{year}}"
+license:             BSD3
+author:              "Tobias Bengtsson"
+maintainer:          "bo.tobias.bengtsson@gmail.com"
+copyright:           "{{year}} Tobias Bengtsson"
+
+extra-source-files:
+- README.md
+
+description:         Please see the README on GitHub at <https://github.com/githubuser/AdventOfCode{{year}}#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- bytestring
+- containers
+- lens
+
+library:
+  source-dirs: src
+  default-extensions:
+    - OverloadedStrings
+
+executables:
+  AdventOfCode{{year}}-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - AdventOfCode{{year}}
+
+{-# START_FILE Setup.hs #-}
+import Distribution.Simple
+main = defaultMain
+
+{-# START_FILE README.md #-}
+# AdventOfCode{{year}}
+
+How to run:
+1) Place your input in `./input/day{1..24}.txt`.
+2) Run using stack (make sure you're in the root folder of this repo): `stack run DAY PART`
+
+For example, to run day 13, part 2: `stack run 13 2`.
+
+{-# START_FILE app/Main.hs #-}
+module Main where
+
+import qualified Data.ByteString as B
+import qualified Data.ByteString.Char8 as BC
+import System.Environment ( getArgs )
+import System.Exit ( exitFailure )
+import System.IO ( stderr, hPutStrLn )
+
+import Aoc.Solver ( getSolver )
+
+main :: IO ()
+main = do
+    args <- getArgs
+    case args of
+        [day, part] -> solve day part
+        _ -> do
+            hPutStrLn stderr "Please provide exactly 2 args: day (1-25) and part (1-2)."
+            exitFailure
+
+solve :: String -> String -> IO ()
+solve day part = do
+    file <- B.readFile $ getFileName day
+    putStrLn $ getSolver day part $ BC.lines file
+
+getFileName :: String -> String
+getFileName day = concat ["./input/day", day, ".txt"]
+
+{-# START_FILE LICENSE #-}
+Copyright Tobias Bengtsson (c) {{year}}
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+    * Neither the name of Tobias Bengtsson nor the names of other
+      contributors may be used to endorse or promote products derived
+      from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+{-# START_FILE .gitignore #-}
+.stack-work/
+input/
+*~
+
+{-# START_FILE input/day1.txt #-}
+
+{-# START_FILE input/day2.txt #-}
+
+{-# START_FILE input/day3.txt #-}
+
+{-# START_FILE input/day4.txt #-}
+
+{-# START_FILE input/day5.txt #-}
+
+{-# START_FILE input/day6.txt #-}
+
+{-# START_FILE input/day7.txt #-}
+
+{-# START_FILE input/day8.txt #-}
+
+{-# START_FILE input/day9.txt #-}
+
+{-# START_FILE input/day10.txt #-}
+
+{-# START_FILE input/day11.txt #-}
+
+{-# START_FILE input/day12.txt #-}
+
+{-# START_FILE input/day13.txt #-}
+
+{-# START_FILE input/day14.txt #-}
+
+{-# START_FILE input/day15.txt #-}
+
+{-# START_FILE input/day16.txt #-}
+
+{-# START_FILE input/day17.txt #-}
+
+{-# START_FILE input/day18.txt #-}
+
+{-# START_FILE input/day19.txt #-}
+
+{-# START_FILE input/day20.txt #-}
+
+{-# START_FILE input/day21.txt #-}
+
+{-# START_FILE input/day22.txt #-}
+
+{-# START_FILE input/day23.txt #-}
+
+{-# START_FILE input/day24.txt #-}
+
+{-# START_FILE src/Aoc/Solver.hs #-}
+module Aoc.Solver where
+
+import qualified Data.ByteString as B
+
+import qualified Aoc.Day1.Part1
+import qualified Aoc.Day1.Part2
+import qualified Aoc.Day2.Part1
+import qualified Aoc.Day2.Part2
+import qualified Aoc.Day3.Part1
+import qualified Aoc.Day3.Part2
+import qualified Aoc.Day4.Part1
+import qualified Aoc.Day4.Part2
+import qualified Aoc.Day5.Part1
+import qualified Aoc.Day5.Part2
+import qualified Aoc.Day6.Part1
+import qualified Aoc.Day6.Part2
+import qualified Aoc.Day7.Part1
+import qualified Aoc.Day7.Part2
+import qualified Aoc.Day8.Part1
+import qualified Aoc.Day8.Part2
+import qualified Aoc.Day9.Part1
+import qualified Aoc.Day9.Part2
+import qualified Aoc.Day10.Part1
+import qualified Aoc.Day10.Part2
+import qualified Aoc.Day11.Part1
+import qualified Aoc.Day11.Part2
+import qualified Aoc.Day12.Part1
+import qualified Aoc.Day12.Part2
+import qualified Aoc.Day13.Part1
+import qualified Aoc.Day13.Part2
+import qualified Aoc.Day14.Part1
+import qualified Aoc.Day14.Part2
+import qualified Aoc.Day15.Part1
+import qualified Aoc.Day15.Part2
+import qualified Aoc.Day16.Part1
+import qualified Aoc.Day16.Part2
+import qualified Aoc.Day17.Part1
+import qualified Aoc.Day17.Part2
+import qualified Aoc.Day18.Part1
+import qualified Aoc.Day18.Part2
+import qualified Aoc.Day19.Part1
+import qualified Aoc.Day19.Part2
+import qualified Aoc.Day20.Part1
+import qualified Aoc.Day20.Part2
+import qualified Aoc.Day21.Part1
+import qualified Aoc.Day21.Part2
+import qualified Aoc.Day22.Part1
+import qualified Aoc.Day22.Part2
+import qualified Aoc.Day23.Part1
+import qualified Aoc.Day23.Part2
+import qualified Aoc.Day24.Part1
+import qualified Aoc.Day24.Part2
+
+getSolver :: String -> String -> [B.ByteString] -> String
+getSolver "1" "1" = Aoc.Day1.Part1.solve
+getSolver "1" "2" = Aoc.Day1.Part2.solve
+getSolver "2" "1" = Aoc.Day2.Part1.solve
+getSolver "2" "2" = Aoc.Day2.Part2.solve
+getSolver "3" "1" = Aoc.Day3.Part1.solve
+getSolver "3" "2" = Aoc.Day3.Part2.solve
+getSolver "4" "1" = Aoc.Day4.Part1.solve
+getSolver "4" "2" = Aoc.Day4.Part2.solve
+getSolver "5" "1" = Aoc.Day5.Part1.solve
+getSolver "5" "2" = Aoc.Day5.Part2.solve
+getSolver "6" "1" = Aoc.Day6.Part1.solve
+getSolver "6" "2" = Aoc.Day6.Part2.solve
+getSolver "7" "1" = Aoc.Day7.Part1.solve
+getSolver "7" "2" = Aoc.Day7.Part2.solve
+getSolver "8" "1" = Aoc.Day8.Part1.solve
+getSolver "8" "2" = Aoc.Day8.Part2.solve
+getSolver "9" "1" = Aoc.Day9.Part1.solve
+getSolver "9" "2" = Aoc.Day9.Part2.solve
+getSolver "10" "1" = Aoc.Day10.Part1.solve
+getSolver "10" "2" = Aoc.Day10.Part2.solve
+getSolver "11" "1" = Aoc.Day11.Part1.solve
+getSolver "11" "2" = Aoc.Day11.Part2.solve
+getSolver "12" "1" = Aoc.Day12.Part1.solve
+getSolver "12" "2" = Aoc.Day12.Part2.solve
+getSolver "13" "1" = Aoc.Day13.Part1.solve
+getSolver "13" "2" = Aoc.Day13.Part2.solve
+getSolver "14" "1" = Aoc.Day14.Part1.solve
+getSolver "14" "2" = Aoc.Day14.Part2.solve
+getSolver "15" "1" = Aoc.Day15.Part1.solve
+getSolver "15" "2" = Aoc.Day15.Part2.solve
+getSolver "16" "1" = Aoc.Day16.Part1.solve
+getSolver "16" "2" = Aoc.Day16.Part2.solve
+getSolver "17" "1" = Aoc.Day17.Part1.solve
+getSolver "17" "2" = Aoc.Day17.Part2.solve
+getSolver "18" "1" = Aoc.Day18.Part1.solve
+getSolver "18" "2" = Aoc.Day18.Part2.solve
+getSolver "19" "1" = Aoc.Day19.Part1.solve
+getSolver "19" "2" = Aoc.Day19.Part2.solve
+getSolver "20" "1" = Aoc.Day20.Part1.solve
+getSolver "20" "2" = Aoc.Day20.Part2.solve
+getSolver "21" "1" = Aoc.Day21.Part1.solve
+getSolver "21" "2" = Aoc.Day21.Part2.solve
+getSolver "22" "1" = Aoc.Day22.Part1.solve
+getSolver "22" "2" = Aoc.Day22.Part2.solve
+getSolver "23" "1" = Aoc.Day23.Part1.solve
+getSolver "23" "2" = Aoc.Day23.Part2.solve
+getSolver "24" "1" = Aoc.Day24.Part1.solve
+getSolver "24" "2" = Aoc.Day24.Part2.solve
+getSolver _ _ = error "Could not parse arguments correctly"
+
+{-# START_FILE src/Aoc/Day1/Part1.hs #-}
+module Aoc.Day1.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day1/Part2.hs #-}
+module Aoc.Day1.Part2 where
+
+import Data.ByteString
+import Aoc.Day1.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day2/Part1.hs #-}
+module Aoc.Day2.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day2/Part2.hs #-}
+module Aoc.Day2.Part2 where
+
+import Data.ByteString
+import Aoc.Day2.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day3/Part1.hs #-}
+module Aoc.Day3.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day3/Part2.hs #-}
+module Aoc.Day3.Part2 where
+
+import Data.ByteString
+import Aoc.Day3.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day4/Part1.hs #-}
+module Aoc.Day4.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day4/Part2.hs #-}
+module Aoc.Day4.Part2 where
+
+import Data.ByteString
+import Aoc.Day4.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day5/Part1.hs #-}
+module Aoc.Day5.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day5/Part2.hs #-}
+module Aoc.Day5.Part2 where
+
+import Data.ByteString
+import Aoc.Day5.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day6/Part1.hs #-}
+module Aoc.Day6.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day6/Part2.hs #-}
+module Aoc.Day6.Part2 where
+
+import Data.ByteString
+import Aoc.Day6.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day7/Part1.hs #-}
+module Aoc.Day7.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day7/Part2.hs #-}
+module Aoc.Day7.Part2 where
+
+import Data.ByteString
+import Aoc.Day7.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day8/Part1.hs #-}
+module Aoc.Day8.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day8/Part2.hs #-}
+module Aoc.Day8.Part2 where
+
+import Data.ByteString
+import Aoc.Day8.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day9/Part1.hs #-}
+module Aoc.Day9.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day9/Part2.hs #-}
+module Aoc.Day9.Part2 where
+
+import Data.ByteString
+import Aoc.Day9.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day10/Part1.hs #-}
+module Aoc.Day10.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day10/Part2.hs #-}
+module Aoc.Day10.Part2 where
+
+import Data.ByteString
+import Aoc.Day10.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day11/Part1.hs #-}
+module Aoc.Day11.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day11/Part2.hs #-}
+module Aoc.Day11.Part2 where
+
+import Data.ByteString
+import Aoc.Day11.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day12/Part1.hs #-}
+module Aoc.Day12.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day12/Part2.hs #-}
+module Aoc.Day12.Part2 where
+
+import Data.ByteString
+import Aoc.Day12.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day13/Part1.hs #-}
+module Aoc.Day13.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day13/Part2.hs #-}
+module Aoc.Day13.Part2 where
+
+import Data.ByteString
+import Aoc.Day13.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day14/Part1.hs #-}
+module Aoc.Day14.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day14/Part2.hs #-}
+module Aoc.Day14.Part2 where
+
+import Data.ByteString
+import Aoc.Day14.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day15/Part1.hs #-}
+module Aoc.Day15.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day15/Part2.hs #-}
+module Aoc.Day15.Part2 where
+
+import Data.ByteString
+import Aoc.Day15.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day16/Part1.hs #-}
+module Aoc.Day16.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day16/Part2.hs #-}
+module Aoc.Day16.Part2 where
+
+import Data.ByteString
+import Aoc.Day16.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day17/Part1.hs #-}
+module Aoc.Day17.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day17/Part2.hs #-}
+module Aoc.Day17.Part2 where
+
+import Data.ByteString
+import Aoc.Day17.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day18/Part1.hs #-}
+module Aoc.Day18.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day18/Part2.hs #-}
+module Aoc.Day18.Part2 where
+
+import Data.ByteString
+import Aoc.Day18.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day19/Part1.hs #-}
+module Aoc.Day19.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day19/Part2.hs #-}
+module Aoc.Day19.Part2 where
+
+import Data.ByteString
+import Aoc.Day19.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day20/Part1.hs #-}
+module Aoc.Day20.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day20/Part2.hs #-}
+module Aoc.Day20.Part2 where
+
+import Data.ByteString
+import Aoc.Day20.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day21/Part1.hs #-}
+module Aoc.Day21.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day21/Part2.hs #-}
+module Aoc.Day21.Part2 where
+
+import Data.ByteString
+import Aoc.Day21.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day22/Part1.hs #-}
+module Aoc.Day22.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day22/Part2.hs #-}
+module Aoc.Day22.Part2 where
+
+import Data.ByteString
+import Aoc.Day22.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day23/Part1.hs #-}
+module Aoc.Day23.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day23/Part2.hs #-}
+module Aoc.Day23.Part2 where
+
+import Data.ByteString
+import Aoc.Day23.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day24/Part1.hs #-}
+module Aoc.Day24.Part1 where
+
+import Data.ByteString
+
+solve :: [ByteString] -> String
+solve = undefined
+
+{-# START_FILE src/Aoc/Day24/Part2.hs #-}
+module Aoc.Day24.Part2 where
+
+import Data.ByteString
+import Aoc.Day24.Part1
+
+solve :: [ByteString] -> String
+solve = undefined
